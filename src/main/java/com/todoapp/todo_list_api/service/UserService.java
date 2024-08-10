@@ -19,6 +19,7 @@ public class UserService implements IUserService {
     @Autowired
     private ModelMapper modelMapper;
 
+    // Create a user.
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
         User user = convertDTOToEntity(userDTO);
@@ -45,18 +46,26 @@ public class UserService implements IUserService {
                 .collect(Collectors.toList()); // collect the dtos into a list.
     }
 
+    // Get one user.
     @Override
     public Optional<UserDTO> getUserById(Long id) {
-        return Optional.empty();
+        return userRepository.findById(id).map(this::convertEntityToDto);
     }
 
+    // Edit a user by its ID.
     @Override
-    public UserDTO editUser(Long id, UserDTO user) {
-        return null;
+    public UserDTO editUser(Long id, UserDTO userDTO) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.get();
+        if (userDTO.getEmail() != null)
+            user.setEmail(userDTO.getEmail());
+        if (userDTO.getUsername() != null)
+            user.setUsername(userDTO.getUsername());
+        return this.saveUser(this.convertEntityToDto(user));
     }
 
     @Override
     public void deleteUser(Long id) {
-
+        userRepository.deleteById(id);
     }
 }
