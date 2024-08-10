@@ -42,13 +42,6 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-    // Update a whole user.
-    @PutMapping("/edit")
-    public ResponseEntity<UserDTO> editUser(@RequestBody UserDTO userDTO) {
-        UserDTO u = userService.saveUser(userDTO);
-        return new ResponseEntity<>(u, HttpStatus.OK);
-    }
-
     // Update user by its ID.
     @PutMapping("/edit/{id}")
     public ResponseEntity<UserDTO> editUser(
@@ -59,8 +52,7 @@ public class UserController {
         if (optionalUserDTO.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        userService.editUser(id, userDTO);
-        UserDTO u = optionalUserDTO.get();
+        UserDTO u = userService.editUser(id, userDTO);
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 

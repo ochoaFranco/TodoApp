@@ -61,7 +61,7 @@ public class UserService implements IUserService {
             user.setEmail(userDTO.getEmail());
         if (userDTO.getUsername() != null)
             user.setUsername(userDTO.getUsername());
-        return this.saveUser(this.convertEntityToDto(user));
+        return convertEntityToDto(userRepository.save(user));
     }
 
     @Override
