@@ -59,13 +59,13 @@ public class CategoryController {
         if (optionalCategory.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        categoryService.updateCategory(id, category);
+        categoryService.editCategory(id, category);
         Category c = optionalCategory.get();
         return new ResponseEntity<>(c, HttpStatus.OK);
     }
 
 
-    // Delete a client by its ID.
+    // Delete a category by its ID.
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteClient(@PathVariable Long id) {
         try {

@@ -12,7 +12,7 @@ public interface ICategoryService {
     // get one category.
     Optional<Category> getCategoryById(Long id);
     // update a category.
-    Category updateCategory(Long id, Category category);
+    Category editCategory(Long id, Category category);
     // delete a category.
     void deleteCategory(Long id);
 }

@@ -33,7 +33,7 @@ public class CategoryService implements ICategoryService {
 
     // Update one category.
     @Override
-    public Category updateCategory(Long id, Category category) {
+    public Category editCategory(Long id, Category category) {
         Optional<Category> optionalCategory = this.getCategoryById(id);
         Category c = optionalCategory.get();
         // Setting attributes.
