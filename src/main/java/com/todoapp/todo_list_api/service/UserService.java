@@ -3,6 +3,7 @@ package com.todoapp.todo_list_api.service;
 import com.todoapp.todo_list_api.dto.UserDTO;
 import com.todoapp.todo_list_api.model.User;
 import com.todoapp.todo_list_api.repository.IUserRepository;
+import com.todoapp.todo_list_api.utils.Util;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,26 +16,17 @@ import java.util.stream.Collectors;
 public class UserService implements IUserService {
     @Autowired
     private IUserRepository userRepository;
-
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private Util util;
 
     // Create a user.
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
-        User user = convertDTOToEntity(userDTO);
+        User user = util.convert(userDTO, User.class);
         user = userRepository.save(user); // save and update the user.
-        return convertEntityToDto(user); // return the updated dto.
-    }
-
-    // Maps entities to DTOs.
-    private UserDTO convertEntityToDto(User user) {
-        return modelMapper.map(user, UserDTO.class);
-    }
-
-    // Maps DTOs to entities.
-    private User convertDTOToEntity(UserDTO userDTO) {
-        return modelMapper.map(userDTO, User.class);
+        return util.convert(user, UserDTO.class); // return the updated dto.
     }
 
     // Get all users.
@@ -42,14 +34,14 @@ public class UserService implements IUserService {
     public List<UserDTO> getUsers() {
         return userRepository.findAll()
                 .stream()// convert list to stream
-                .map(this::convertEntityToDto) // map each entity to a dto.
+                .map(user -> util.convert(user, UserDTO.class)) // map each entity to a dto.
                 .collect(Collectors.toList()); // collect the dtos into a list.
     }
 
     // Get one user.
     @Override
     public Optional<UserDTO> getUserById(Long id) {
-        return userRepository.findById(id).map(this::convertEntityToDto);
+        return userRepository.findById(id).map(user -> util.convert(user, UserDTO.class));
     }
 
     // Edit a user by its ID.
@@ -61,7 +53,7 @@ public class UserService implements IUserService {
             user.setEmail(userDTO.getEmail());
         if (userDTO.getUsername() != null)
             user.setUsername(userDTO.getUsername());
-        return convertEntityToDto(userRepository.save(user));
+        return util.convert(userRepository.save(user), UserDTO.class);
     }
 
     @Override
