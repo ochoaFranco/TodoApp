@@ -70,7 +70,7 @@ public class CategoryController {
     public ResponseEntity<String> deleteClient(@PathVariable Long id) {
         try {
             categoryService.deleteCategory(id);
-            return new ResponseEntity<>("The client was deleted", HttpStatus.OK);
+            return new ResponseEntity<>("The category was deleted", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("The was an error", HttpStatus.BAD_REQUEST);
         }

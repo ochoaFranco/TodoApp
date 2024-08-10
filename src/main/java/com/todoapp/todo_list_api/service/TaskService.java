@@ -1,9 +1,7 @@
 package com.todoapp.todo_list_api.service;
 
 import com.todoapp.todo_list_api.dto.TaskDTO;
-import com.todoapp.todo_list_api.dto.UserDTO;
 import com.todoapp.todo_list_api.model.Task;
-import com.todoapp.todo_list_api.model.User;
 import com.todoapp.todo_list_api.repository.ITaskRepository;
 import com.todoapp.todo_list_api.utils.Util;
 import org.modelmapper.ModelMapper;
