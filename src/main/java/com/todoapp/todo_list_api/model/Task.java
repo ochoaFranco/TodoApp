@@ -1,10 +1,12 @@
 package com.todoapp.todo_list_api.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Entity
+@Data
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
