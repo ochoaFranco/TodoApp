@@ -21,29 +21,28 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
-        return userDTO;
+        User user = convertDTOToEntity(userDTO);
+        user = userRepository.save(user); // save and update the user.
+        return convertEntityToDto(user); // return the updated dto.
     }
 
-    private User converDTOToEntity(UserDTO userDTO) {
-        User user = new User();
-        user = modelMapper.map(userDTO, User.class);
-        return user;
+    // Maps entities to DTOs.
+    private UserDTO convertEntityToDto(User user) {
+        return modelMapper.map(user, UserDTO.class);
+    }
+
+    // Maps DTOs to entities.
+    private User convertDTOToEntity(UserDTO userDTO) {
+        return modelMapper.map(userDTO, User.class);
     }
 
     // Get all users.
     @Override
     public List<UserDTO> getUsers() {
         return userRepository.findAll()
-                .stream()
-                .map(this::convertEntityToDto)
-                .collect(Collectors.toList());
-    }
-
-    // Maps entities to dtos.
-    private UserDTO convertEntityToDto(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO = modelMapper.map(user, UserDTO.class);
-        return userDTO;
+                .stream()// convert list to stream
+                .map(this::convertEntityToDto) // map each entity to a dto.
+                .collect(Collectors.toList()); // collect the dtos into a list.
     }
 
     @Override
