@@ -8,13 +8,13 @@ import java.util.Optional;
 
 public interface ITaskService {
     // creates a task.
-    UserDTO saveTask(TaskDTO taskDTO);
+    TaskDTO saveTask(TaskDTO taskDTO);
     // Get all tasks.
     List<TaskDTO> getTasks();
     // get one task.
     Optional<TaskDTO> getTaskById(Long id);
     // update a task by its ID.
-    UserDTO editTask(Long id, TaskDTO taskDTO);
+    TaskDTO editTask(Long id, TaskDTO taskDTO);
     // delete a task.
     void deleteTask(Long id);
 }
