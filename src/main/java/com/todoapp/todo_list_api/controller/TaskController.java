@@ -71,18 +71,4 @@ public class TaskController {
             return new ResponseEntity<>("There was an error", HttpStatus.BAD_REQUEST);
         }
     }
-
-    // Exceptions
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleMethodArgumentNotValidException(
-            MethodArgumentNotValidException exp
-    ) {
-        Map<String, String> errors = new HashMap<>();
-        exp.getBindingResult().getAllErrors().forEach(error -> {
-            String fieldName = ((FieldError)error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
 }
