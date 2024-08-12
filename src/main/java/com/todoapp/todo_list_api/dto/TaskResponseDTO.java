@@ -1,5 +1,6 @@
 package com.todoapp.todo_list_api.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.io.Serializable;
@@ -13,5 +14,6 @@ public class TaskResponseDTO implements Serializable {
     private String description;
     private LocalDate due_date;
     private boolean completed = false;
+
     private String categoryName;
 }

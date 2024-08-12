@@ -2,6 +2,7 @@ package com.todoapp.todo_list_api.controller;
 
 import com.todoapp.todo_list_api.dto.UserDTO;
 import com.todoapp.todo_list_api.service.IUserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,8 @@ public class UserController {
 
     // Create a user.
     @PostMapping("/create")
-    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> saveUser(
+            @Valid @RequestBody UserDTO userDTO) {
         userService.saveUser(userDTO);
         return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
@@ -46,6 +48,7 @@ public class UserController {
     @PutMapping("/edit/{id}")
     public ResponseEntity<UserDTO> editUser(
             @PathVariable Long id,
+            @Valid
             @RequestBody UserDTO userDTO) {
 
         Optional<UserDTO> optionalUserDTO = userService.getUserById(id);

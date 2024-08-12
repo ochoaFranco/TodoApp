@@ -53,7 +53,7 @@ public class TaskController {
     @PutMapping("/edit/{id}")
     public ResponseEntity<TaskResponseDTO> editTask(
             @PathVariable Long id,
-            @RequestBody TaskRequestDTO taskRequestDTO) {
+            @Valid @RequestBody TaskRequestDTO taskRequestDTO) {
         try {
             return new ResponseEntity<>(taskService.editTask(id, taskRequestDTO), HttpStatus.OK);
         } catch (Exception e) {

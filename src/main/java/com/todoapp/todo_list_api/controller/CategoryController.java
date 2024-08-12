@@ -2,6 +2,7 @@ package com.todoapp.todo_list_api.controller;
 
 import com.todoapp.todo_list_api.model.Category;
 import com.todoapp.todo_list_api.service.ICategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,8 @@ public class CategoryController {
 
     // Create a category.
     @PostMapping("/create")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(
+            @Valid @RequestBody Category category) {
         categoryService.saveCategory(category);
         return new ResponseEntity<>(category, HttpStatus.CREATED);
     }
@@ -53,7 +55,7 @@ public class CategoryController {
     @PutMapping("/edit/{id}")
     public ResponseEntity<Category> editCategory(
             @PathVariable Long id,
-            @RequestBody Category category) {
+            @Valid @RequestBody Category category) {
 
         Optional<Category> optionalCategory = categoryService.getCategoryById(id);
         if (optionalCategory.isEmpty())
