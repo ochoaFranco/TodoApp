@@ -1,18 +1,20 @@
 package com.todoapp.todo_list_api.service;
 
+import com.todoapp.todo_list_api.dto.CategoryRequestDTO;
+import com.todoapp.todo_list_api.dto.CategoryResponseDTO;
 import com.todoapp.todo_list_api.model.Category;
 import java.util.List;
 import java.util.Optional;
 
 public interface ICategoryService {
     // creates a category.
-    Category saveCategory(Category category);
+    CategoryResponseDTO saveCategory(CategoryRequestDTO categoryDTO);
     // Get all categories.
-    List<Category> getCategories();
+    List<CategoryResponseDTO> getCategories();
     // get one category.
-    Optional<Category> getCategoryById(Long id);
+    CategoryResponseDTO getCategoryById(Long id);
     // update a category.
-    Category editCategory(Long id, Category category);
+    CategoryResponseDTO editCategory(Long id, CategoryRequestDTO categoryRequestDTO);
     // delete a category.
     void deleteCategory(Long id);
 }

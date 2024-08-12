@@ -1,8 +1,12 @@
 package com.todoapp.todo_list_api.controller;
 
+import com.todoapp.todo_list_api.dto.CategoryRequestDTO;
+import com.todoapp.todo_list_api.dto.CategoryResponseDTO;
 import com.todoapp.todo_list_api.model.Category;
 import com.todoapp.todo_list_api.service.ICategoryService;
 import jakarta.validation.Valid;
+import org.apache.tomcat.util.http.parser.HttpParser;
+import org.aspectj.weaver.patterns.HasMemberTypePatternForPerThisMatching;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,51 +23,42 @@ public class CategoryController {
 
     // Create a category.
     @PostMapping("/create")
-    public ResponseEntity<Category> createCategory(
-            @Valid @RequestBody Category category) {
-        categoryService.saveCategory(category);
-        return new ResponseEntity<>(category, HttpStatus.CREATED);
+    public ResponseEntity<CategoryResponseDTO> createCategory(
+            @Valid @RequestBody CategoryRequestDTO categoryDTO) {
+        CategoryResponseDTO categoryResponseDTO = categoryService.saveCategory(categoryDTO);
+        return new ResponseEntity<>(categoryResponseDTO, HttpStatus.CREATED);
     }
 
     // Read all categories.
     @GetMapping()
-    public ResponseEntity<List<Category>> getCategories() {
-        List<Category> categoryList = categoryService.getCategories();
+    public ResponseEntity<List<CategoryResponseDTO>> getCategories() {
+        List<CategoryResponseDTO> categoryList = categoryService.getCategories();
         return new ResponseEntity<>(categoryList, HttpStatus.OK);
     }
 
     // Read one category.
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        Optional<Category> optionalCategory = categoryService.getCategoryById(id);
-        if (optionalCategory.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        Category category = optionalCategory.get();
-
-        return new ResponseEntity<>(category, HttpStatus.OK);
-    }
-
-    // Update a whole category.
-    @PutMapping("/edit")
-    public ResponseEntity<Category> editCategory(@RequestBody Category category) {
-        Category c = categoryService.saveCategory(category);
-        return new ResponseEntity<>(c, HttpStatus.OK);
+    public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable Long id) {
+        try {
+            CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryById(id);
+            return new ResponseEntity<>(categoryResponseDTO, HttpStatus.OK);
+        }  catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     // Update category by its ID.
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Category> editCategory(
+    public ResponseEntity<CategoryResponseDTO> editCategory(
             @PathVariable Long id,
-            @Valid @RequestBody Category category) {
+            @Valid @RequestBody CategoryRequestDTO categoryRequestDTO) {
 
-        Optional<Category> optionalCategory = categoryService.getCategoryById(id);
-        if (optionalCategory.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        categoryService.editCategory(id, category);
-        Category c = optionalCategory.get();
-        return new ResponseEntity<>(c, HttpStatus.OK);
+        try {
+            CategoryResponseDTO categoryResponseDTO = categoryService.editCategory(id, categoryRequestDTO);
+            return new ResponseEntity<>(categoryResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 
