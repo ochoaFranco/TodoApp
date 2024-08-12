@@ -3,6 +3,7 @@ package com.todoapp.todo_list_api.controller;
 import com.todoapp.todo_list_api.dto.TaskRequestDTO;
 import com.todoapp.todo_list_api.dto.TaskResponseDTO;
 import com.todoapp.todo_list_api.service.ITaskService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class TaskController {
     }
 
     // Read all tasks.
+    @Tag(name = "get", description = "GET methods of To-do APIs")
     @GetMapping()
     public ResponseEntity<List<TaskResponseDTO>> getTasks() {
         List<TaskResponseDTO> taskRequestDTOList = taskService.getTasks();
@@ -31,6 +33,7 @@ public class TaskController {
     }
 
     // Read one task.
+    @Tag(name = "get", description = "GET methods of To-do APIs")
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable Long id) {
         Optional<TaskResponseDTO> optionalTask = taskService.getTaskById(id);
