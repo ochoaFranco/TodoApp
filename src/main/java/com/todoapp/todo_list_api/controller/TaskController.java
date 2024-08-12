@@ -4,12 +4,17 @@ import com.todoapp.todo_list_api.dto.TaskRequestDTO;
 import com.todoapp.todo_list_api.dto.TaskResponseDTO;
 import com.todoapp.todo_list_api.service.ITaskService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -20,12 +25,12 @@ public class TaskController {
 
     // Create a task.
     @PostMapping("/create")
-    public ResponseEntity<TaskResponseDTO> saveTask(@RequestBody TaskRequestDTO taskRequestDTO) {
+    public ResponseEntity<TaskResponseDTO> saveTask(
+            @Valid @RequestBody TaskRequestDTO taskRequestDTO) {
         return new ResponseEntity<>(taskService.saveTask(taskRequestDTO), HttpStatus.CREATED);
     }
 
     // Read all tasks.
-    @Tag(name = "get", description = "GET methods of To-do APIs")
     @GetMapping()
     public ResponseEntity<List<TaskResponseDTO>> getTasks() {
         List<TaskResponseDTO> taskRequestDTOList = taskService.getTasks();
@@ -33,7 +38,6 @@ public class TaskController {
     }
 
     // Read one task.
-    @Tag(name = "get", description = "GET methods of To-do APIs")
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable Long id) {
         Optional<TaskResponseDTO> optionalTask = taskService.getTaskById(id);
@@ -66,5 +70,19 @@ public class TaskController {
         } catch (Exception e) {
             return new ResponseEntity<>("There was an error", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    // Exceptions
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException exp
+    ) {
+        Map<String, String> errors = new HashMap<>();
+        exp.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError)error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

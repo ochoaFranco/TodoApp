@@ -33,26 +33,26 @@ public class TaskService implements ITaskService {
     // Create a task.
     @Override
     public TaskResponseDTO saveTask(TaskRequestDTO taskRequestDTO) {
-        Task task = new Task();
-        // Setting attributes.
-        task.setTitle(taskRequestDTO.getTitle());
-        task.setDescription(taskRequestDTO.getDescription());
-        task.setDue_date(taskRequestDTO.getDue_date());
-        task.setCompleted(taskRequestDTO.isCompleted());
-        User user = new User();
-        user.setUserId(taskRequestDTO.getUserId());
-        Category category = new Category();
-        category.setCategoryId(taskRequestDTO.getCategoryId());
-        task.setUser(user);
-        task.setCategory(category);
+        Task task = getTask(taskRequestDTO);
         task = taskRepository.save(task);
-
+        Optional <Category> optionalCategory = categoryRepository.findById(taskRequestDTO.getCategoryId());
+        String categoryName = " ";
+        if (optionalCategory.isPresent())
+            categoryName = optionalCategory.get().getName();
+        System.out.println("NAME: " + categoryName);
         return new TaskResponseDTO(
                 task.getTitle(),
                 task.getDescription(),
                 task.getDue_date(),
-                task.isCompleted()
+                task.isCompleted(),
+                categoryName
         );
+    }
+
+    private Task getTask(TaskRequestDTO taskRequestDTO) {
+        Task task = new Task();
+        setAttributes(taskRequestDTO, task);
+        return task;
     }
 
     // Get all tasks.
@@ -76,6 +76,25 @@ public class TaskService implements ITaskService {
     public TaskResponseDTO editTask(Long id, TaskRequestDTO taskRequestDTO) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Task not found"));
+        setAttributes(taskRequestDTO, task);
+        task = taskRepository.save(task);
+        Optional <Category> optionalCategory = categoryRepository.findById(taskRequestDTO.getCategoryId());
+        String categoryName = " ";
+
+        if (optionalCategory.isPresent())
+            categoryName = optionalCategory.get().getName();
+
+        return new TaskResponseDTO(
+                task.getTitle(),
+                task.getDescription(),
+                task.getDue_date(),
+                task.isCompleted(),
+                categoryName
+        );
+    }
+
+    // Take a task and set its attributes based on a given request.
+    private void setAttributes(TaskRequestDTO taskRequestDTO, Task task) {
         // Set attributes.
         task.setTitle(taskRequestDTO.getTitle());
         task.setDescription(taskRequestDTO.getDescription());
@@ -87,15 +106,6 @@ public class TaskService implements ITaskService {
         category.setCategoryId(taskRequestDTO.getCategoryId());
         task.setUser(user);
         task.setCategory(category);
-        task = taskRepository.save(task);
-
-        return new TaskResponseDTO(
-                task.getTitle(),
-                task.getDescription(),
-                task.getDue_date(),
-                task.isCompleted()
-
-        );
     }
 
     // Delete one task.

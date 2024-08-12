@@ -1,7 +1,8 @@
 package com.todoapp.todo_list_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -23,4 +24,5 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "categoryId")
     private Category category;
+
 }
