@@ -57,50 +57,45 @@ public class TaskService implements ITaskService {
 
     // Get all tasks.
     @Override
-    public List<TaskRequestDTO> getTasks() {
+    public List<TaskResponseDTO> getTasks() {
         return taskRepository.findAll()
                 .stream()// convert list to stream
-                .map(task -> util.convert(task, TaskRequestDTO.class)) // map each entity to a dto.
+                .map(task -> util.convert(task, TaskResponseDTO.class)) // map each entity to a dto.
                 .collect(Collectors.toList()); // collect the dtos into a list.
     }
 
     // Get task by id.
     @Override
-    public Optional<TaskRequestDTO> getTaskById(Long id) {
-        return taskRepository.findById(id).map(task -> util.convert(task, TaskRequestDTO.class));
+    public Optional<TaskResponseDTO> getTaskById(Long id) {
+        return taskRepository.findById(id)
+                .map(task -> util.convert(task, TaskResponseDTO.class));
     }
 
     // Edit a task by its ID.
     @Override
-    public TaskRequestDTO editTask(Long id, TaskRequestDTO taskRequestDTO) {
-        Optional<Task> optionalTask = taskRepository.findById(id);
-        // fetching the task by its ID.
-        if (optionalTask.isEmpty())
-            throw new RuntimeException("Task not found");
+    public TaskResponseDTO editTask(Long id, TaskRequestDTO taskRequestDTO) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Task not found"));
+        // Set attributes.
+        task.setTitle(taskRequestDTO.getTitle());
+        task.setDescription(taskRequestDTO.getDescription());
+        task.setDue_date(taskRequestDTO.getDue_date());
+        task.setCompleted(taskRequestDTO.isCompleted());
+        User user = new User();
+        user.setUserId(taskRequestDTO.getUserId());
+        Category category = new Category();
+        category.setCategoryId(taskRequestDTO.getCategoryId());
+        task.setUser(user);
+        task.setCategory(category);
+        task = taskRepository.save(task);
 
-        Task task = optionalTask.get();
+        return new TaskResponseDTO(
+                task.getTitle(),
+                task.getDescription(),
+                task.getDue_date(),
+                task.isCompleted()
 
-        if (taskRequestDTO.getCategoryId() != null) {
-            Category category = categoryRepository
-                    .findById(taskRequestDTO.getCategoryId())
-                    .orElseThrow(()-> new RuntimeException("Category Not found"));
-            task.setCategory(category);
-        }
-
-        // Set the user if the userId is provided
-        if (taskRequestDTO.getUserId() != null) {
-            User user = userRepository.findById(taskRequestDTO.getUserId())
-                    .orElseThrow(() -> new RuntimeException("User not found"));
-            task.setUser(user);
-        }
-
-        if (task.getTitle() != null)
-            task.setTitle(task.getTitle());
-
-        if (task.getDescription() != null)
-            task.setDescription(task.getDescription());
-
-        return util.convert(taskRepository.save(task), TaskRequestDTO.class);
+        );
     }
 
     // Delete one task.

@@ -10,11 +10,11 @@ public interface ITaskService {
     // creates a task.
     TaskResponseDTO saveTask(TaskRequestDTO taskRequestDTO);
     // Get all tasks.
-    List<TaskRequestDTO> getTasks();
+    List<TaskResponseDTO> getTasks();
     // get one task.
-    Optional<TaskRequestDTO> getTaskById(Long id);
+    Optional<TaskResponseDTO> getTaskById(Long id);
     // update a task by its ID.
-    TaskRequestDTO editTask(Long id, TaskRequestDTO taskRequestDTO);
+    TaskResponseDTO editTask(Long id, TaskRequestDTO taskRequestDTO);
     // delete a task.
     void deleteTask(Long id);
 }

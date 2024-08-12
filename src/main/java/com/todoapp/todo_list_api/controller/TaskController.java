@@ -25,35 +25,30 @@ public class TaskController {
 
     // Read all tasks.
     @GetMapping()
-    public ResponseEntity<List<TaskRequestDTO>> getTasks() {
-        List<TaskRequestDTO> taskRequestDTOList = taskService.getTasks();
+    public ResponseEntity<List<TaskResponseDTO>> getTasks() {
+        List<TaskResponseDTO> taskRequestDTOList = taskService.getTasks();
         return new ResponseEntity<>(taskRequestDTOList, HttpStatus.OK);
     }
 
     // Read one task.
     @GetMapping("/{id}")
-    public ResponseEntity<TaskRequestDTO> getTaskById(@PathVariable Long id) {
-        Optional<TaskRequestDTO> optionalTask = taskService.getTaskById(id);
+    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable Long id) {
+        Optional<TaskResponseDTO> optionalTask = taskService.getTaskById(id);
         if (optionalTask.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        TaskRequestDTO taskRequestDTO = optionalTask.get();
+        TaskResponseDTO taskResponseDTO = optionalTask.get();
 
-        return new ResponseEntity<>(taskRequestDTO, HttpStatus.OK);
+        return new ResponseEntity<>(taskResponseDTO, HttpStatus.OK);
     }
 
     // Update task by its ID.
     @PutMapping("/edit/{id}")
-    public ResponseEntity<TaskRequestDTO> editTask(
+    public ResponseEntity<TaskResponseDTO> editTask(
             @PathVariable Long id,
             @RequestBody TaskRequestDTO taskRequestDTO) {
-
-        Optional<TaskRequestDTO> optionalTaskDTO = taskService.getTaskById(id);
-        if (optionalTaskDTO.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         try {
-            TaskRequestDTO t = taskService.editTask(id, taskRequestDTO);
-            return new ResponseEntity<>(t, HttpStatus.OK);
+            return new ResponseEntity<>(taskService.editTask(id, taskRequestDTO), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
