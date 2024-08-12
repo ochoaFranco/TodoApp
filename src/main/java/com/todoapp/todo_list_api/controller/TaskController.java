@@ -1,6 +1,7 @@
 package com.todoapp.todo_list_api.controller;
 
-import com.todoapp.todo_list_api.dto.TaskDTO;
+import com.todoapp.todo_list_api.dto.TaskRequestDTO;
+import com.todoapp.todo_list_api.dto.TaskResponseDTO;
 import com.todoapp.todo_list_api.service.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,44 +19,45 @@ public class TaskController {
 
     // Create a task.
     @PostMapping("/create")
-    public ResponseEntity<TaskDTO> saveTask(@RequestBody TaskDTO taskDTO) {
-        taskService.saveTask(taskDTO);
-        return new ResponseEntity<>(taskDTO, HttpStatus.CREATED);
+    public ResponseEntity<TaskResponseDTO> saveTask(@RequestBody TaskRequestDTO taskRequestDTO) {
+        return new ResponseEntity<>(taskService.saveTask(taskRequestDTO), HttpStatus.CREATED);
     }
 
     // Read all tasks.
     @GetMapping()
-    public ResponseEntity<List<TaskDTO>> getTasks() {
-        List<TaskDTO> taskDTOList = taskService.getTasks();
-        return new ResponseEntity<>(taskDTOList, HttpStatus.OK);
+    public ResponseEntity<List<TaskRequestDTO>> getTasks() {
+        List<TaskRequestDTO> taskRequestDTOList = taskService.getTasks();
+        return new ResponseEntity<>(taskRequestDTOList, HttpStatus.OK);
     }
 
     // Read one task.
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long id) {
-        Optional<TaskDTO> optionalTask = taskService.getTaskById(id);
+    public ResponseEntity<TaskRequestDTO> getTaskById(@PathVariable Long id) {
+        Optional<TaskRequestDTO> optionalTask = taskService.getTaskById(id);
         if (optionalTask.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        TaskDTO taskDTO = optionalTask.get();
+        TaskRequestDTO taskRequestDTO = optionalTask.get();
 
-        return new ResponseEntity<>(taskDTO, HttpStatus.OK);
+        return new ResponseEntity<>(taskRequestDTO, HttpStatus.OK);
     }
 
     // Update task by its ID.
     @PutMapping("/edit/{id}")
-    public ResponseEntity<TaskDTO> editTask(
+    public ResponseEntity<TaskRequestDTO> editTask(
             @PathVariable Long id,
-            @RequestBody TaskDTO taskDTO) {
+            @RequestBody TaskRequestDTO taskRequestDTO) {
 
-        Optional<TaskDTO> optionalTaskDTO = taskService.getTaskById(id);
+        Optional<TaskRequestDTO> optionalTaskDTO = taskService.getTaskById(id);
         if (optionalTaskDTO.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        TaskDTO t = taskService.editTask(id, taskDTO);
-        return new ResponseEntity<>(t, HttpStatus.OK);
+        try {
+            TaskRequestDTO t = taskService.editTask(id, taskRequestDTO);
+            return new ResponseEntity<>(t, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
-
 
     // Delete a category by its ID.
     @DeleteMapping("/delete/{id}")

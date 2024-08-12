@@ -1,20 +1,20 @@
 package com.todoapp.todo_list_api.service;
 
-import com.todoapp.todo_list_api.dto.TaskDTO;
-import com.todoapp.todo_list_api.dto.UserDTO;
+import com.todoapp.todo_list_api.dto.TaskRequestDTO;
+import com.todoapp.todo_list_api.dto.TaskResponseDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ITaskService {
     // creates a task.
-    TaskDTO saveTask(TaskDTO taskDTO);
+    TaskResponseDTO saveTask(TaskRequestDTO taskRequestDTO);
     // Get all tasks.
-    List<TaskDTO> getTasks();
+    List<TaskRequestDTO> getTasks();
     // get one task.
-    Optional<TaskDTO> getTaskById(Long id);
+    Optional<TaskRequestDTO> getTaskById(Long id);
     // update a task by its ID.
-    TaskDTO editTask(Long id, TaskDTO taskDTO);
+    TaskRequestDTO editTask(Long id, TaskRequestDTO taskRequestDTO);
     // delete a task.
     void deleteTask(Long id);
 }
