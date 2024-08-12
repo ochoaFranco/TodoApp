@@ -23,6 +23,7 @@ public class CategoryService implements ICategoryService {
     @Override
     public CategoryResponseDTO saveCategory(CategoryRequestDTO categoryRequestDTO) {
         Category category = mapper.toCategory(categoryRequestDTO);
+        categoryRepo.save(category);
         return mapper.categoryToResponseDTO(category);
     }
 
@@ -45,6 +46,7 @@ public class CategoryService implements ICategoryService {
         return mapper.categoryToResponseDTO(category);
     }
 
+    // TODO Make this method work. it is not editing this properly.
     // Update one category.
     @Override
     public CategoryResponseDTO editCategory(Long id, CategoryRequestDTO categoryRequestDTO) {

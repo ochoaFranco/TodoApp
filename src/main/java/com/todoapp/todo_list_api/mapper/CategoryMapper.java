@@ -3,6 +3,7 @@ package com.todoapp.todo_list_api.mapper;
 import com.todoapp.todo_list_api.dto.CategoryRequestDTO;
 import com.todoapp.todo_list_api.dto.CategoryResponseDTO;
 import com.todoapp.todo_list_api.model.Category;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,6 +12,7 @@ public class CategoryMapper {
     public Category toCategory(CategoryRequestDTO categoryRequestDTO) {
         Category category = new Category();
         category.setName(categoryRequestDTO.getName());
+
         return category;
     }
     // takes an entity and returns a dto.
