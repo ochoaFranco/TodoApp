@@ -46,7 +46,6 @@ public class CategoryService implements ICategoryService {
         return mapper.categoryToResponseDTO(category);
     }
 
-    // TODO Make this method work. it is not editing this properly.
     // Update one category.
     @Override
     public CategoryResponseDTO editCategory(Long id, CategoryRequestDTO categoryRequestDTO) {
@@ -54,7 +53,8 @@ public class CategoryService implements ICategoryService {
         if (optionalCategory.isEmpty())
             throw new RuntimeException();
         Category category = optionalCategory.get();
-        return mapper.categoryToResponseDTO(category);
+        category = mapper.setAttributes(category, categoryRequestDTO);
+        return mapper.categoryToResponseDTO(categoryRepo.save(category));
     }
 
     // Delete one category by its ID.
