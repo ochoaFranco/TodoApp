@@ -2,6 +2,7 @@ package com.todoapp.todo_list_api.service;
 
 import com.todoapp.todo_list_api.dto.TaskRequestDTO;
 import com.todoapp.todo_list_api.dto.TaskResponseDTO;
+import com.todoapp.todo_list_api.mapper.TaskMapper;
 import com.todoapp.todo_list_api.model.Category;
 import com.todoapp.todo_list_api.model.Task;
 import com.todoapp.todo_list_api.model.User;
@@ -29,30 +30,15 @@ public class TaskService implements ITaskService {
     private ModelMapper modelMapper;
     @Autowired
     private Util util;
+    @Autowired
+    private TaskMapper taskMapper;
 
     // Create a task.
     @Override
     public TaskResponseDTO saveTask(TaskRequestDTO taskRequestDTO) {
-        Task task = getTask(taskRequestDTO);
-        task = taskRepository.save(task);
-        Optional <Category> optionalCategory = categoryRepository.findById(taskRequestDTO.getCategoryId());
-        String categoryName = " ";
-        if (optionalCategory.isPresent())
-            categoryName = optionalCategory.get().getName();
-        System.out.println("NAME: " + categoryName);
-        return new TaskResponseDTO(
-                task.getTitle(),
-                task.getDescription(),
-                task.getDue_date(),
-                task.isCompleted(),
-                categoryName
-        );
-    }
-
-    private Task getTask(TaskRequestDTO taskRequestDTO) {
-        Task task = new Task();
-        setAttributes(taskRequestDTO, task);
-        return task;
+        Task task = taskMapper.toTask(taskRequestDTO);
+        taskRepository.save(task);
+        return taskMapper.toResponseDTO(task);
     }
 
     // Get all tasks.
@@ -66,9 +52,10 @@ public class TaskService implements ITaskService {
 
     // Get task by id.
     @Override
-    public Optional<TaskResponseDTO> getTaskById(Long id) {
-        return taskRepository.findById(id)
-                .map(task -> util.convert(task, TaskResponseDTO.class));
+    public TaskResponseDTO getTaskById(Long id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(RuntimeException::new);
+        return taskMapper.toResponseDTO(task);
     }
 
     // Edit a task by its ID.

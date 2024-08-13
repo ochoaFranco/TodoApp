@@ -14,6 +14,5 @@ public class TaskResponseDTO implements Serializable {
     private String description;
     private LocalDate due_date;
     private boolean completed = false;
-
     private String categoryName;
 }

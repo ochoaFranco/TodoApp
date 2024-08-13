@@ -61,7 +61,6 @@ public class CategoryController {
         }
     }
 
-
     // Delete a category by its ID.
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteClient(@PathVariable Long id) {

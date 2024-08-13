@@ -8,6 +8,8 @@ import java.time.LocalDate;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,5 +26,4 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "categoryId")
     private Category category;
-
 }

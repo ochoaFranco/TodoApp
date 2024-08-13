@@ -12,7 +12,7 @@ public interface ITaskService {
     // Get all tasks.
     List<TaskResponseDTO> getTasks();
     // get one task.
-    Optional<TaskResponseDTO> getTaskById(Long id);
+    TaskResponseDTO getTaskById(Long id);
     // update a task by its ID.
     TaskResponseDTO editTask(Long id, TaskRequestDTO taskRequestDTO);
     // delete a task.

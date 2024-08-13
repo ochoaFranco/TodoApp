@@ -3,18 +3,13 @@ package com.todoapp.todo_list_api.controller;
 import com.todoapp.todo_list_api.dto.TaskRequestDTO;
 import com.todoapp.todo_list_api.dto.TaskResponseDTO;
 import com.todoapp.todo_list_api.service.ITaskService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -40,13 +35,13 @@ public class TaskController {
     // Read one task.
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable Long id) {
-        Optional<TaskResponseDTO> optionalTask = taskService.getTaskById(id);
-        if (optionalTask.isEmpty())
+        try {
+            TaskResponseDTO taskResponseDTO = taskService.getTaskById(id);
+            return new ResponseEntity<>(taskResponseDTO, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        TaskResponseDTO taskResponseDTO = optionalTask.get();
-
-        return new ResponseEntity<>(taskResponseDTO, HttpStatus.OK);
     }
 
     // Update task by its ID.
