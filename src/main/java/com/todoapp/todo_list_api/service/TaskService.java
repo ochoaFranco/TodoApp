@@ -72,6 +72,7 @@ public class TaskService implements ITaskService {
             categoryName = optionalCategory.get().getName();
 
         return new TaskResponseDTO(
+                task.getTaskId(),
                 task.getTitle(),
                 task.getDescription(),
                 task.getDue_date(),

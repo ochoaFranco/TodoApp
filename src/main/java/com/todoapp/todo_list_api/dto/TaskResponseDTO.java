@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskResponseDTO implements Serializable {
+    private Long id;
     private String title;
     private String description;
     private LocalDate due_date;

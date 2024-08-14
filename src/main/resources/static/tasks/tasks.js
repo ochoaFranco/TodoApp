@@ -7,7 +7,7 @@ const getTasks = async () => {
         }
         const data = await response.json();
         console.log(data);
-        
+
         displayTasks(data);
     } catch(error) {
         console.log('There has been a problem with your fetch operation', error);
@@ -25,9 +25,38 @@ const displayTasks = (tasks) => {
         // setting the content with all task attributes.
         div.innerHTML = `
             <h4>${task.title}</h4>
+             <button onclick="editTask(${task.id})">Edit</button>
+             <button onclick="deleteTask(${task.id})">Delete</button>
         `;
+        console.log('task id: ' + task.id);
+        console.log('task title: ' + task.title);
+        console.log('task description: ' + task.description);
+
         const hr = document.createElement('hr');
         taskList.appendChild(hr);
         taskList.appendChild(div);
     })
 }
+
+const editTask = (taskId) => {
+    // Redirect to edit page or show a form for editing
+    window.location.href = `edit-task.html?id=${taskId}`;
+}
+
+const deleteTask = async (taskId) => {
+    try {
+        const response = await fetch(`http://127.0.0.1:8080/tasks/delete/${taskId}`, {
+            method: 'DELETE',
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
+        }
+        alert('Task deleted successfully!');
+        getTasks();
+    } catch (error) {
+        console.log('There was a problem with the task deletion', error);
+    }
+}
+
+// Automatically load tasks when the page loads
+window.onload = getTasks;
