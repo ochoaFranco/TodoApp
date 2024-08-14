@@ -7,12 +7,16 @@
 </head>
 <body>
 <div class="main-container">
-    <div>
-        <h1>To do App</h1>
+    <h1>To do App</h1>
+    <div class="header-container">
+        <h3>Create a new Task</h3>
+        <button>New task</button> <br>
     </div>
-
-    <button onclick="getCategories()">Fetch Categories</button>
+    <br>
+    <button onclick="getTasks()">Get all tasks</button>
+    <div id="all-tasks"></div>
     <div id="categoryList"></div>
+    <!-- <button onclick="getCategories()">Fetch Categories</button> -->
 </div>
 
 <script src="app.js" type="text/javascript" > </script>
