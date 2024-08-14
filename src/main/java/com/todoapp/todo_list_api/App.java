@@ -6,13 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class TodoListApiApplication {
+public class App {
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
 	public static void main(String[] args) {
-		SpringApplication.run(TodoListApiApplication.class, args);
+		SpringApplication.run(App.class, args);
 	}
 
 }
