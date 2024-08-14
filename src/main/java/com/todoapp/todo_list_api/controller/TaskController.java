@@ -40,7 +40,6 @@ public class TaskController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 
     // Update task by its ID.

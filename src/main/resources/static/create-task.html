@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Task</title>
+</head>
+<body>
+    <div class="main-container">
+        <h1>To do App</h1>
+        <div class="header-container">
+            <h3>Create a new Task</h3>
+            <form id="new-task-form">
+                <label for="title">Title:</label><br>
+                <input type="text" id="title" name="title" required><br>
+
+                <label for="description">Description:</label><br>
+                <textarea id="description" name="description" required></textarea><br>
+
+                <label for="due_date">Due Date:</label><br>
+                <input type="date" id="due_date" name="due_date" required><br>
+
+                <label for="userId">User ID:</label><br>
+                <input type="number" id="userId" name="userId" required><br>
+
+                <label for="categoryId">Category ID:</label><br>
+                <input type="number" id="categoryId" name="categoryId" required><br>
+
+                <button type="submit">Create Task</button>
+                <a href="index.html" class="button-link">Go back</a>
+                
+            </form>
+        </div>
+    </div>
+
+    <script src="tasks/create-task.js" type="text/javascript"></script>
+</body>
+</html>
