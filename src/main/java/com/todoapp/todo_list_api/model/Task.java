@@ -18,8 +18,8 @@ public class Task {
     private String description;
     private LocalDate due_date;
     private boolean completed;
-    private LocalDate created_at;
-    private LocalDate updated_at;
+    private LocalDate created_at = LocalDate.now();
+    private LocalDate updated_at = LocalDate.now();
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

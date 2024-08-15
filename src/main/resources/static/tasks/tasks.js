@@ -7,7 +7,7 @@ const getTasks = async () => {
         }
         const data = await response.json();
         console.log(data);
-
+        
         displayTasks(data);
     } catch(error) {
         console.log('There has been a problem with your fetch operation', error);
@@ -24,14 +24,14 @@ const displayTasks = (tasks) => {
         const completedStatus = task.completed ? 'Finished' : 'Not finished yet';
         // setting the content with all task attributes.
         div.innerHTML = `
-            <h4>${task.title}</h4>
-             <button onclick="editTask(${task.id})">Edit</button>
-             <button onclick="deleteTask(${task.id})">Delete</button>
+            <h4><a href="task-description.html?id=${task.id}">${task.title}</a></h4>
+             <button class="btn btn-edit" onclick="editTask(${task.id})">Edit</button>
+             <button class="btn btn-delete" onclick="deleteTask(${task.id})">Delete</button>
         `;
         console.log('task id: ' + task.id);
         console.log('task title: ' + task.title);
         console.log('task description: ' + task.description);
-
+        
         const hr = document.createElement('hr');
         taskList.appendChild(hr);
         taskList.appendChild(div);
