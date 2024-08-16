@@ -1,3 +1,5 @@
+import { showToast } from "../utils/utils.js";
+
 const getTasks = async () => {
     const url = 'http://127.0.0.1:8080/tasks'
     try {
@@ -24,18 +26,31 @@ const displayTasks = (tasks) => {
         const completedStatus = task.completed ? 'Finished' : 'Not finished yet';
         // setting the content with all task attributes.
         div.innerHTML = `
-            <h4><a href="task-description.html?id=${task.id}">${task.title}</a></h4>
-             <button class="btn btn-edit" onclick="editTask(${task.id})">Edit</button>
-             <button class="btn btn-delete" onclick="deleteTask(${task.id})">Delete</button>
+             <h4><a href="task-description.html?id=${task.id}">${task.title}</a></h4>
+            <button class="btn btn-edit" data-task-id="${task.id}">Edit</button>
+            <button class="btn btn-delete" data-task-id="${task.id}">Delete</button>
+            <p>Status: ${completedStatus}</p>
         `;
-        console.log('task id: ' + task.id);
-        console.log('task title: ' + task.title);
-        console.log('task description: ' + task.description);
         
         const hr = document.createElement('hr');
         taskList.appendChild(hr);
         taskList.appendChild(div);
     })
+
+    // Add event listeners to buttons
+    document.querySelectorAll('.btn-edit').forEach(button => {
+        button.addEventListener('click', () => {
+            const taskId = button.getAttribute('data-task-id');
+            editTask(taskId);
+        });
+    });
+
+    document.querySelectorAll('.btn-delete').forEach(button => {
+        button.addEventListener('click', () => {
+            const taskId = button.getAttribute('data-task-id');
+            deleteTask(taskId);
+        });
+    });
 }
 
 const editTask = (taskId) => {
@@ -51,7 +66,7 @@ const deleteTask = async (taskId) => {
         if (!response.ok) {
             throw new Error('Network response was not ok.');
         }
-        alert('Task deleted successfully!');
+        showToast('Task deleted successfully!')
         getTasks();
     } catch (error) {
         console.log('There was a problem with the task deletion', error);

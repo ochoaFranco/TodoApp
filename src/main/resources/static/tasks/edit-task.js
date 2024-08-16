@@ -1,3 +1,5 @@
+import { showToast } from "../utils/utils.js";
+
 let taskId;
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -23,10 +25,8 @@ document.getElementById('edit-task-form').addEventListener('submit', (event) => 
         description: document.getElementById('description').value,
         due_date: document.getElementById('due_date').value,
         categoryId: document.getElementById('categoryId').value,
-        userId: document.getElementById('userId').value,
     };
     // Send updated task data to backend.
-    console.log(taskId);
     fetch(`http://127.0.0.1:8080/tasks/edit/${taskId}`, {
         method: 'PUT',
         headers: {
@@ -38,7 +38,7 @@ document.getElementById('edit-task-form').addEventListener('submit', (event) => 
         if (!response.ok) {
             console.log('Error updating task: ', response.statusText);
         } else {
-            alert('Task updated successfully!');
+            showToast('Task updated successfully!')
             window.location.href = 'index.html'; // redirect to task list
         }
     })

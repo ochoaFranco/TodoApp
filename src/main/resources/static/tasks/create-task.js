@@ -1,19 +1,23 @@
+import { populateCategories } from "./categories.js";
+import { showToast } from "../utils/utils.js";
 const createTask = () => {
+    // populate categories with data.
+    populateCategories();
+    
+    // get HTML elements and then populate them with backend data.
     document.getElementById('new-task-form').addEventListener('submit', async function(event) {
         event.preventDefault();
         const title = document.getElementById('title').value;
         const description = document.getElementById('description').value;
         const dueDate = document.getElementById('due_date').value;
-        const userId = document.getElementById('userId').value;
-        const categoryId = document.getElementById('categoryId').value;
+        const category = document.getElementById('category').value;
         
         const taskData = {
             title: title,
             description: description,
             due_date: dueDate,
             completed: false, // default value
-            userId: userId,
-            categoryId: categoryId
+            categoryId: category
         };
 
         try {
@@ -24,10 +28,14 @@ const createTask = () => {
                 },
                 body: JSON.stringify(taskData)
             });
-            if (!response.ok)
+            if (!response.ok){
+                console.log(category);
+                
                 throw new Error('Network response was not ok');
+            }
 
-            alert('Task created successfully!');
+            // alert('Task created successfully!');
+            showToast('Task updated successfully!')
             // Redirect to the homepage
             window.location.href = 'index.html'; 
         } catch(error) {

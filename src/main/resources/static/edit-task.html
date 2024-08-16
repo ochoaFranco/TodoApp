@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles-edit-task.css">
     <title>Create New Task</title>
 </head>
 <body>
@@ -11,8 +12,6 @@
         <div class="header-container">
             <h3>Edit a task</h3>
             <form id="edit-task-form">
-                <label for="categoryId">Category ID:</label><br>
-                <input type="text" id="categoryId" name="categoryId"><br>
                 <label for="title">Title:</label><br>
                 <input type="text" id="title" name="title" required><br>
                 <label for="description">Description:</label><br>
@@ -21,9 +20,7 @@
                 <input type="text" id="categoryName" name="categoryName" required><br>
 
                 <label for="due_date">Due Date:</label><br>
-                <input type="date" id="due_date" name="due_date" required><br>
-                <label for="userId">User ID:</label> <br>   
-                <input type="text" id="userId" name="userId"><br> 
+                <input type="date" id="due_date" name="due_date" required><br> 
                 <button type="submit">Save Changes</button>
                 <a href="index.html" class="button-link">Go back</a>
                 
@@ -31,6 +28,7 @@
         </div>
     </div>
 
-    <script src="tasks/edit-task.js" type="text/javascript"></script>
+    <script src="tasks/edit-task.js" type="module"></script>
+    <div id="toast" class="toast"></div>
 </body>
 </html>

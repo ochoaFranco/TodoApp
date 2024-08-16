@@ -4,6 +4,9 @@ body, h1, h2, h3, p, a, button{
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
+p {
+    margin-top: 15px;
+}
 /* Main container styling */
 .main-container {
     max-width: 800px;
@@ -88,4 +91,18 @@ a:hover {
 /* Styling the task item container */
 .task-item {
     margin-bottom: 20px;
+}
+
+/* Toast styles */
+/* css/styles-tasks.css */
+.toast {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    display: none; /* Hidden by default */
+    z-index: 1000; /* Ensure it's above other content */
 }
