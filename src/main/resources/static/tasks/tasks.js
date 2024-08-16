@@ -23,7 +23,7 @@ const displayTasks = (tasks) => {
         const div = document.createElement('div');
         div.className = 'task-item';
         // formatting completed status
-        const completedStatus = task.completed ? 'Finished' : 'Not finished yet';
+        const completedStatus = task.completed ? 'Finished' : 'Not finished yet';   
         div.innerHTML = `
         <div class="task-header">
             <h4><a href="task-description.html?id=${task.id}">${task.title}</a></h4>

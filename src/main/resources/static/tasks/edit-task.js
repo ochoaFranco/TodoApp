@@ -1,5 +1,4 @@
-import { showToast } from "../utils/utils.js";
-import { populateCategories } from "./categories.js";
+import { showToast, populateCategories } from "../utils/utils.js";
 
 let taskId;
 document.addEventListener('DOMContentLoaded', () => {

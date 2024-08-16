@@ -1,5 +1,4 @@
-import { populateCategories } from "./categories.js";
-import { showToast } from "../utils/utils.js";
+import { showToast, populateCategories} from "../utils/utils.js";
 const createTask = () => {
     // populate categories with data.
     populateCategories();
