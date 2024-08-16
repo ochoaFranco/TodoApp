@@ -24,13 +24,15 @@ const displayTasks = (tasks) => {
         div.className = 'task-item';
         // formatting completed status
         const completedStatus = task.completed ? 'Finished' : 'Not finished yet';
-        // setting the content with all task attributes.
         div.innerHTML = `
-             <h4><a href="task-description.html?id=${task.id}">${task.title}</a></h4>
-            <button class="btn btn-edit" data-task-id="${task.id}">Edit</button>
-            <button class="btn btn-delete" data-task-id="${task.id}">Delete</button>
-            <p>Status: ${completedStatus}</p>
-        `;
+        <div class="task-header">
+            <h4><a href="task-description.html?id=${task.id}">${task.title}</a></h4>
+            <span class="task-category">Category: ${task.categoryName}</span>
+        </div>
+        <button class="btn btn-edit" data-task-id="${task.id}">Edit</button>
+        <button class="btn btn-delete" data-task-id="${task.id}">Delete</button>
+        <p class="task-status ${task.completed ? 'status-finished' : 'status-unfinished'}">Status: ${completedStatus}</p>
+    `;
         
         const hr = document.createElement('hr');
         taskList.appendChild(hr);

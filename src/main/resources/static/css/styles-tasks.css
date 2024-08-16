@@ -70,6 +70,43 @@ button:hover {
     background-color: #c82333;
 }
 
+.task-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px; /* Space between header and other elements */
+
+}
+
+.task-header h4 {
+    margin: 0;
+}
+
+
+.task-category {
+    background-color: #db7734; /* Change this color as needed */
+    color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+    margin-left: 10px; /* Space between title and category */
+
+}
+/* Style for status */
+.task-status {
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* Specific styles for finished and unfinished statuses */
+.status-finished {
+    color: green; /* Green for finished tasks */
+}
+
+.status-unfinished {
+    color: red; /* Red for unfinished tasks */
+}
+
 /* Link styling */
 a {
     display: inline-block;
@@ -88,10 +125,14 @@ a:hover {
     margin-top: 20px;
 }
 
-/* Styling the task item container */
 .task-item {
     margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
+
 
 /* Toast styles */
 /* css/styles-tasks.css */

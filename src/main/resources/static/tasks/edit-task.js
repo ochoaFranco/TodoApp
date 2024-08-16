@@ -1,4 +1,5 @@
 import { showToast } from "../utils/utils.js";
+import { populateCategories } from "./categories.js";
 
 let taskId;
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,10 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('title').value = task.title;
             document.getElementById('description').value = task.description;
             document.getElementById('due_date').value = task.due_date;
-            document.getElementById('categoryName').value = task.categoryName;
         })
         .catch(error => console.error('error fetching task data', error))
 });
+
+// populate categories with data.
+populateCategories();
 
 document.getElementById('edit-task-form').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -24,7 +27,7 @@ document.getElementById('edit-task-form').addEventListener('submit', (event) => 
         title: document.getElementById('title').value,
         description: document.getElementById('description').value,
         due_date: document.getElementById('due_date').value,
-        categoryId: document.getElementById('categoryId').value,
+        categoryId: document.getElementById('category').value,
     };
     // Send updated task data to backend.
     fetch(`http://127.0.0.1:8080/tasks/edit/${taskId}`, {
