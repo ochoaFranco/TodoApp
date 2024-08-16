@@ -5,10 +5,8 @@ import com.todoapp.todo_list_api.dto.TaskResponseDTO;
 import com.todoapp.todo_list_api.mapper.TaskMapper;
 import com.todoapp.todo_list_api.model.Category;
 import com.todoapp.todo_list_api.model.Task;
-import com.todoapp.todo_list_api.model.User;
 import com.todoapp.todo_list_api.repository.ICategoryRepository;
 import com.todoapp.todo_list_api.repository.ITaskRepository;
-import com.todoapp.todo_list_api.repository.IUserRepository;
 import com.todoapp.todo_list_api.utils.Util;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +22,6 @@ public class TaskService implements ITaskService {
     private ITaskRepository taskRepository;
     @Autowired
     private ICategoryRepository categoryRepository;
-    @Autowired
-    private IUserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -88,11 +84,8 @@ public class TaskService implements ITaskService {
         task.setDescription(taskRequestDTO.getDescription());
         task.setDue_date(taskRequestDTO.getDue_date());
         task.setCompleted(taskRequestDTO.isCompleted());
-        User user = new User();
-        user.setUserId(taskRequestDTO.getUserId());
         Category category = new Category();
         category.setCategoryId(taskRequestDTO.getCategoryId());
-        task.setUser(user);
         task.setCategory(category);
     }
 

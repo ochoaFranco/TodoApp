@@ -21,9 +21,6 @@ public class Task {
     private LocalDate created_at = LocalDate.now();
     private LocalDate updated_at = LocalDate.now();
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
-    @ManyToOne
     @JoinColumn(name = "categoryId")
     private Category category;
 }

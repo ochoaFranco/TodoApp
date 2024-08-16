@@ -4,7 +4,6 @@ import com.todoapp.todo_list_api.dto.TaskRequestDTO;
 import com.todoapp.todo_list_api.dto.TaskResponseDTO;
 import com.todoapp.todo_list_api.model.Category;
 import com.todoapp.todo_list_api.model.Task;
-import com.todoapp.todo_list_api.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,9 +18,6 @@ public class TaskMapper {
         category.setCategoryId(taskRequestDTO.getCategoryId());
         task.setCategory(category);
         task.setCompleted(taskRequestDTO.isCompleted());
-        User user = new User();
-        user.setUserId(taskRequestDTO.getUserId());
-        task.setUser(user);
         return task;
     }
 

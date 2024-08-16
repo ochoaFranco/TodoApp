@@ -18,8 +18,6 @@ public class TaskRequestDTO implements Serializable {
     @NotNull(message = "Due_Date must not be null")
     private LocalDate due_date;
     private boolean completed = false;
-    @NotNull(message = "userId must not be null")
-    private Long userId;
     @NotNull(message = "categoryId must not be null")
     private Long categoryId;
 }

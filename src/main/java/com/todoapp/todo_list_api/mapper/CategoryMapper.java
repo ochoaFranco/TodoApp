@@ -12,13 +12,12 @@ public class CategoryMapper {
     public Category toCategory(CategoryRequestDTO categoryRequestDTO) {
         Category category = new Category();
         category.setName(categoryRequestDTO.getName());
-
         return category;
     }
 
     // takes an entity and returns a dto.
     public CategoryResponseDTO categoryToResponseDTO(Category category) {
-        return new CategoryResponseDTO(category.getName());
+        return new CategoryResponseDTO(category.getCategoryId() ,category.getName());
     }
 
     public Category setAttributes(Category category, CategoryRequestDTO categoryRequestDTO) {
