@@ -9,12 +9,16 @@ import java.util.Optional;
 public interface ITaskService {
     // creates a task.
     TaskResponseDTO saveTask(TaskRequestDTO taskRequestDTO);
-    // Get all tasks.
-    List<TaskResponseDTO> getTasks();
+    // Get all uncompleted tasks.
+    List<TaskResponseDTO> getUncompletedTasks();
+    // Get completed tasks.
+    List<TaskResponseDTO> getCompletedTasks();
     // get one task.
     TaskResponseDTO getTaskById(Long id);
     // update a task by its ID.
     TaskResponseDTO editTask(Long id, TaskRequestDTO taskRequestDTO);
     // delete a task.
     void deleteTask(Long id);
+    // finish a task
+    void finishTask(Long id);
 }

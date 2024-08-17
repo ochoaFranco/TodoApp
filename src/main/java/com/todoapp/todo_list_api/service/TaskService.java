@@ -36,12 +36,22 @@ public class TaskService implements ITaskService {
         taskRepository.save(task);
         return taskMapper.toResponseDTO(task);
     }
-
-    // Get all tasks.
+    // Get all uncompleted tasks.
     @Override
-    public List<TaskResponseDTO> getTasks() {
+    public List<TaskResponseDTO> getUncompletedTasks() {
         return taskRepository.findAll()
                 .stream()// convert list to stream
+                .filter(task -> !task.isCompleted())
+                .map(task -> util.convert(task, TaskResponseDTO.class)) // map each entity to a dto.
+                .collect(Collectors.toList()); // collect the dtos into a list.
+    }
+
+    // Get all completed tasks.
+    @Override
+    public List<TaskResponseDTO> getCompletedTasks() {
+        return taskRepository.findAll()
+                .stream()// convert list to stream
+                .filter(Task::isCompleted)
                 .map(task -> util.convert(task, TaskResponseDTO.class)) // map each entity to a dto.
                 .collect(Collectors.toList()); // collect the dtos into a list.
     }
@@ -93,5 +103,13 @@ public class TaskService implements ITaskService {
     @Override
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
+    }
+
+    // Mark a task as finished.
+    @Override
+    public void finishTask(Long id) {
+        Task task = taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task not found"));
+        task.setCompleted(true);
+        taskRepository.save(task);
     }
 }

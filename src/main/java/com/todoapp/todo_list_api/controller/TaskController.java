@@ -24,10 +24,17 @@ public class TaskController {
         return new ResponseEntity<>(taskService.saveTask(taskRequestDTO), HttpStatus.CREATED);
     }
 
-    // Read all tasks.
-    @GetMapping()
-    public ResponseEntity<List<TaskResponseDTO>> getTasks() {
-        List<TaskResponseDTO> taskRequestDTOList = taskService.getTasks();
+    // Read all uncompleted tasks.
+    @GetMapping("/uncompleted")
+    public ResponseEntity<List<TaskResponseDTO>> getUncompletedTasks() {
+        List<TaskResponseDTO> taskRequestDTOList = taskService.getUncompletedTasks();
+        return new ResponseEntity<>(taskRequestDTOList, HttpStatus.OK);
+    }
+
+    // Read all completed tasks.
+    @GetMapping("/completed")
+    public ResponseEntity<List<TaskResponseDTO>> getCompletedTasks() {
+        List<TaskResponseDTO> taskRequestDTOList = taskService.getCompletedTasks();
         return new ResponseEntity<>(taskRequestDTOList, HttpStatus.OK);
     }
 
@@ -54,6 +61,16 @@ public class TaskController {
         }
     }
 
+    // Mark a task as completed.
+    @PatchMapping("/{id}/completed")
+    public ResponseEntity<String> finishTask(@PathVariable Long id) {
+        try {
+            taskService.finishTask(id);
+            return new ResponseEntity<>("The task was marked as completed", HttpStatus.OK);
+        } catch (Exception e ) {
+            return new ResponseEntity<>("There was an error", HttpStatus.BAD_REQUEST);
+        }
+    }
     // Delete a category by its ID.
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable Long id) {
