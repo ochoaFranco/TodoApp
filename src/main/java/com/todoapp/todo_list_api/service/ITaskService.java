@@ -21,4 +21,6 @@ public interface ITaskService {
     void deleteTask(Long id);
     // finish a task
     void finishTask(Long id);
+    // mark a task as not finished.
+    void notFinished(Long id);
 }

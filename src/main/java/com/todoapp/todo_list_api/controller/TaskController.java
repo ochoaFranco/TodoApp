@@ -71,6 +71,18 @@ public class TaskController {
             return new ResponseEntity<>("There was an error", HttpStatus.BAD_REQUEST);
         }
     }
+
+    // Mark a task as unCompleted.
+    @PatchMapping("/{id}/uncompleted")
+    public ResponseEntity<String> notFinishedTask(@PathVariable Long id) {
+        try {
+            taskService.notFinished(id);
+            return new ResponseEntity<>("The task was marked as uncompleted", HttpStatus.OK);
+        } catch (Exception e ) {
+            return new ResponseEntity<>("There was an error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     // Delete a category by its ID.
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable Long id) {

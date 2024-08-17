@@ -112,4 +112,12 @@ public class TaskService implements ITaskService {
         task.setCompleted(true);
         taskRepository.save(task);
     }
+
+    // Mark a task as not finished.
+    @Override
+    public void notFinished (Long id) {
+        Task task = taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task not found"));
+        task.setCompleted(false);
+        taskRepository.save(task);
+    }
 }
