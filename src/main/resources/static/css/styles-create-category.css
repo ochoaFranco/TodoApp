@@ -93,3 +93,31 @@ button:hover {
     background-color: #007bff;
     color: #fff;
 }
+
+.alert {
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    position: relative;
+    width: 300px;
+    max-width: 90%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alert-success {
+    background-color: #28a745;
+}
+
+.alert-danger {
+    background-color: #dc3545;
+}
+
+.alert-warning {
+    background-color: #ffc107;
+}
+
+.alert-info {
+    background-color: #17a2b8;
+}

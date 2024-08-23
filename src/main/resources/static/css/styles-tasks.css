@@ -66,6 +66,13 @@ button:hover {
     background-color: #dc3545; /* Red */
 }
 
+.btn-toDo {
+    background-color: #dc3545; 
+}
+.btn-toDo:hover {
+    background-color: #fa1229; 
+}
+
 .btn-delete:hover {
     background-color: #c82333;
 }
@@ -147,3 +154,22 @@ a:hover {
     display: none; /* Hidden by default */
     z-index: 1000; /* Ensure it's above other content */
 }
+
+.alert {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    z-index: 1000;
+}
+
+.alert-success {
+    background-color: #28a745;
+}
+
+.alert-error {
+    background-color: #dc3545;
+}
+

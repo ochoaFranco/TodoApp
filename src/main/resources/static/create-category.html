@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles-create-category.css">
+    <link rel="stylesheet" href="/css/styles-create-category.css">
     <title>Create New Category</title>
 </head>
 <body>
@@ -12,14 +12,15 @@
         <div class="header-container">
             <h3>Create a New Category</h3>
             <form id="create-category-form">
+                <div id="alert-container" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
                 <label for="categoryName">Category Name:</label><br>
                 <input type="text" id="categoryName" name="categoryName" required><br>
                 <button type="submit">Create Category</button>
-                <a href="index.html" class="button-link">Go back</a>
+                <a href="/index.html" class="button-link">Go back</a>
             </form>
         </div>
     </div>
 
-    <script src="categories/create-categories.js" type="module"></script>
+    <script src="/categories/create-categories.js" type="module"></script>
 </body>
 </html>

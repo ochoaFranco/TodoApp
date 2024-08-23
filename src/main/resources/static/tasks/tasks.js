@@ -1,7 +1,7 @@
 import { showToast } from "../utils/utils.js";
 
 const getTasks = async () => {
-    const url = 'http://127.0.0.1:8080/tasks'
+    const url = 'http://127.0.0.1:8080/tasks/uncompleted'
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -26,11 +26,12 @@ const displayTasks = (tasks) => {
         const completedStatus = task.completed ? 'Finished' : 'Not finished yet';   
         div.innerHTML = `
         <div class="task-header">
-            <h4><a href="task-description.html?id=${task.id}">${task.title}</a></h4>
+            <h4><a href="/task-description.html?id=${task.id}">${task.title}</a></h4>
             <span class="task-category">Category: ${task.categoryName}</span>
         </div>
         <button class="btn btn-edit" data-task-id="${task.id}">Edit</button>
         <button class="btn btn-delete" data-task-id="${task.id}">Delete</button>
+        <button class="btn btn-finish" data-task-id="${task.id}">finish</button>
         <p class="task-status ${task.completed ? 'status-finished' : 'status-unfinished'}">Status: ${completedStatus}</p>
     `;
         
@@ -39,27 +40,54 @@ const displayTasks = (tasks) => {
         taskList.appendChild(div);
     })
 
-    // Add event listeners to buttons
+    // Add event listeners to edit button
     document.querySelectorAll('.btn-edit').forEach(button => {
         button.addEventListener('click', () => {
             const taskId = button.getAttribute('data-task-id');
             editTask(taskId);
         });
     });
-
+    // Add event listeners to delete button
     document.querySelectorAll('.btn-delete').forEach(button => {
         button.addEventListener('click', () => {
             const taskId = button.getAttribute('data-task-id');
             deleteTask(taskId);
         });
     });
+    // Add event listeners to finish button.
+    document.querySelectorAll('.btn-finish').forEach(button => {
+        button.addEventListener('click', () => {
+            const taskId = button.getAttribute('data-task-id');
+            finishTask(taskId);
+        });
+    });
+
 }
 
+// Mark a task as completed.
+const finishTask = async (taskId) => {
+    try {
+        const response = await fetch(`http://127.0.0.1:8080/tasks/${taskId}/completed`,{
+            method: 'PATCH'
+        });
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
+        }
+        showToast('Task completed successfully!')
+        getTasks();
+    } catch(error) {
+        console.log('There was a problem with the task', error);
+    }
+}
+
+// Edit a task.
 const editTask = (taskId) => {
     // Redirect to edit page or show a form for editing
     window.location.href = `edit-task.html?id=${taskId}`;
 }
 
+// Delete a task.
 const deleteTask = async (taskId) => {
     try {
         const response = await fetch(`http://127.0.0.1:8080/tasks/delete/${taskId}`, {
