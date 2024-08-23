@@ -6,6 +6,8 @@ import com.todoapp.todo_list_api.exception.DuplicateCategoryNameException;
 import com.todoapp.todo_list_api.exception.ErrorResponse;
 import com.todoapp.todo_list_api.model.Category;
 import com.todoapp.todo_list_api.service.ICategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.aspectj.weaver.patterns.HasMemberTypePatternForPerThisMatching;
@@ -24,6 +26,9 @@ public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
 
+    @Operation(summary = "Create a new category", description = "Create a new category in the system")
+    @ApiResponse(responseCode = "201", description = "Category created successfully")
+    @ApiResponse(responseCode = "400", description = "Invalid input data")
     // Create a category.
     @PostMapping("/create")
     public ResponseEntity<?> createCategory(
@@ -41,13 +46,26 @@ public class CategoryController {
         }
     }
 
+    @Operation(summary = "Get all categories", description = "Retrieve all categories from the system")
+    @ApiResponse(responseCode = "200", description = "Categories retrieved successfully!")
+    @ApiResponse(responseCode = "400", description = "An error has occurred")
     // Read all categories.
     @GetMapping()
-    public ResponseEntity<List<CategoryResponseDTO>> getCategories() {
-        List<CategoryResponseDTO> categoryList = categoryService.getCategories();
-        return new ResponseEntity<>(categoryList, HttpStatus.OK);
+    public ResponseEntity<?> getCategories() {
+        try {
+            List<CategoryResponseDTO> categoryList = categoryService.getCategories();
+            return new ResponseEntity<>(categoryList, HttpStatus.OK);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(
+                    "An error has occurred", "Could not retrieve categories."
+            );
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
+    @Operation(summary = "Get one category", description = "Retrieve a category from the system")
+    @ApiResponse(responseCode = "200", description = "Category retrieved successfully!")
+    @ApiResponse(responseCode = "400", description = "An error has occurred")
     // Read one category.
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable Long id) {
@@ -58,7 +76,9 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
+    @Operation(summary = "Edit a category", description = "Takes a category as parameter to be edited")
+    @ApiResponse(responseCode = "200", description = "Category has been edited successfully!")
+    @ApiResponse(responseCode = "400", description = "An error has occurred")
     // Update category by its ID.
     @PutMapping("/edit/{id}")
     public ResponseEntity<CategoryResponseDTO> editCategory(
@@ -72,7 +92,9 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
+    @Operation(summary = "Delete a category", description = "Takes a category as parameter to be deleted")
+    @ApiResponse(responseCode = "200", description = "Category has been deleted successfully!")
+    @ApiResponse(responseCode = "400", description = "An error has occurred")
     // Delete a category by its ID.
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteClient(@PathVariable Long id) {
