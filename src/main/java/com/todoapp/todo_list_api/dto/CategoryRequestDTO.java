@@ -1,5 +1,6 @@
 package com.todoapp.todo_list_api.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 

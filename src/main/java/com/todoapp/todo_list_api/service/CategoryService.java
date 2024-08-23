@@ -2,6 +2,7 @@ package com.todoapp.todo_list_api.service;
 
 import com.todoapp.todo_list_api.dto.CategoryRequestDTO;
 import com.todoapp.todo_list_api.dto.CategoryResponseDTO;
+import com.todoapp.todo_list_api.exception.DuplicateCategoryNameException;
 import com.todoapp.todo_list_api.mapper.CategoryMapper;
 import com.todoapp.todo_list_api.model.Category;
 import com.todoapp.todo_list_api.repository.ICategoryRepository;
@@ -23,6 +24,9 @@ public class CategoryService implements ICategoryService {
     @Override
     public CategoryResponseDTO saveCategory(CategoryRequestDTO categoryRequestDTO) {
         Category category = mapper.toCategory(categoryRequestDTO);
+        if (categoryRepo.existsByName(categoryRequestDTO.getName())) {
+            throw new DuplicateCategoryNameException("Category name already exists");
+        }
         categoryRepo.save(category);
         return mapper.categoryToResponseDTO(category);
     }
