@@ -27,3 +27,4 @@ export const populateCategories = async() => {
         console.log('Error fetching categories:', error);
     }
 }
+
