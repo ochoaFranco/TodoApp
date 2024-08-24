@@ -19,6 +19,7 @@ Este proyecto es una aplicación web desarrollada con **Spring Boot** que permit
 - **Spring Boot**: Framework principal para la construcción de la aplicación.
 - **Hibernate**: ORM utilizado para la interacción con la base de datos.
 - **SQL**: Lenguaje utilizado para la gestión de la base de datos.
+- **Swagger**: Para ve la documentacion acceda a la siguiente URL: http://localhost:8080/swagger-ui/index.html#/
 
 ---
 
@@ -45,12 +46,6 @@ Además, es necesario levantar el archivo `index.html` en la siguiente URL: `htt
 - **Leer**: Los usuarios pueden ver todas las categorías disponibles.
 - **Actualizar**: Los usuarios pueden editar los detalles de una categoría.
 - **Eliminar**: Los usuarios pueden eliminar una categoría, siempre y cuando no tenga tareas asociadas.
-
-## Screenshots
-
-![App Screenshot](https://github.com/ochoaFranco/Domino-Java/blob/main/pictures/game.png)
-![App Screenshot](https://github.com/ochoaFranco/Domino-Java/blob/main/pictures/login.png)
-![App Screenshot](https://github.com/ochoaFranco/Domino-Java/blob/main/pictures/ranking.png)
 
 
 ## 🛠 Skills y patrones de diseño
