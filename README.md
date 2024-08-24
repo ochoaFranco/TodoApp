@@ -51,3 +51,7 @@ Además, es necesario levantar el archivo `index.html` en la siguiente URL: `htt
 ## 🛠 Skills y patrones de diseño
 Java - Spring Boot- Git - MVC - DTO - Inyección de dependencias.
 
+## Screenshots
+
+![App Screenshot](https://github.com/ochoaFranco/TodoApp/blob/main/img/Documentacion.png)
+
